@@ -3,13 +3,20 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
+import { CardActionArea, Button } from '@mui/material';
+// import { useHistory } from "react-router-dom";
 
 function ProductCard(props) {
+  // console.log("product card props", props);
     const { product } = props;
+    // const history = useHistory();
+
+
+
+
   return (
     <Card sx={{ maxWidth: 335, margin: "10px" }}>
-      <CardActionArea>
+      <CardActionArea onClick={() => props.history.push(`/product/${product.id}`)}>
         <CardMedia
           component="img"
           height="200"
@@ -25,6 +32,7 @@ function ProductCard(props) {
           </Typography>
         </CardContent>
       </CardActionArea>
+        <Button variant='outlined' onClick={() => props.addToCart(product)}>Add to cart</Button>
     </Card>
   );
 }

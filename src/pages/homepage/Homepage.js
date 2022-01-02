@@ -1,16 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Loader from "react-loader-spinner";
 
 import ProductCard from "../../components/ProductCard/ProductCard";
+import { CartContext } from "../../Routes"
 
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import styles from "./styles.module.css";
 
 
-function Home() {
+function Home(props) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  // const [cartItems, setCartItems] = useState([]);
+
+  // const { cartItems, setCartItems } = useContext(CartContext);
+  const data = useContext(CartContext);
+  // console.log( "homepage--->", data)
 
   function fetchProducts() {
     setLoading(true);
@@ -40,8 +46,12 @@ function Home() {
     );
   }
 
+  const addToCart = product => {
+    data.setCartItems([...data.cartItems, product]);
+  };
+
   const renderProducts = () => {
-    return products.map((product, idx) =>  <ProductCard key={idx} product={product} />);
+    return products.map((product, idx) =>  <ProductCard key={idx} product={product} addToCart={addToCart} history={props.history}/>);
   }
 
     return (
